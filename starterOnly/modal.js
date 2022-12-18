@@ -59,3 +59,28 @@ function closeModal() {
   modalbg.style.display = "none";
   window.location.reload();
 }
+/*
+fonction qui verifie tous les champs => si tous les champs sont ok, envoi le formulaire et fait afficher message confirmation (+ gestion fermeture de la confirmation au click sur bouton)
+*/
+function submitForm() {
+  //Si tous les champs sont ok
+  if (
+    checkFirstname() &&
+    checkLastname() &&
+    checkEmail() &&
+    checkBirthdate() &&
+    checkDate() &&
+    checkNumberTournament() &&
+    checkCheckBox() &&
+    checkCity()
+  ) {
+    //on remplace le contenu de la div .modal par le texte
+    document.querySelector(".modal").innerHTML =
+      "Merci, votre réservation a bien été reçue!";
+    // on remplace la valeur du bouton "c'est parti" par "Fermer"
+    buttonSendForm.value = "Fermer";
+
+    //au click sur le bouton on appelle la fonction pour fermer la modale
+    buttonSendForm.addEventListener("click", closeModal);
+  }
+}
