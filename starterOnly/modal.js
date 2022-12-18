@@ -84,3 +84,48 @@ function submitForm() {
     buttonSendForm.addEventListener("click", closeModal);
   }
 }
+/*
+fonction qui check le champ lastname 
+*/
+function checkLastname() {
+  if (lastnameField.value === "") {
+    document.getElementById("error-lastname").innerHTML =
+      "Ce champ doit être rempli";
+  } else if (!regexName.test(lastnameField.value.trim())) {
+    document.getElementById("error-lastname").innerHTML =
+      "Format incorrect, vous devez renseigner au moins 2 caractères";
+  } else {
+    document.getElementById("error-lastname").innerHTML = "";
+    return true;
+  }
+}
+/*
+fonction qui check le champ firstname 
+*/
+function checkFirstname() {
+  if (firstnameField.value === "") {
+    document.getElementById("error-firstname").innerHTML =
+      "Ce champ doit être rempli";
+  } else if (!regexName.test(firstnameField.value.trim())) {
+    document.getElementById("error-firstname").innerHTML =
+      "Format incorrect, vous devez renseigner au moins 2 caractères";
+  } else {
+    document.getElementById("error-firstname").innerHTML = "";
+    return true;
+  }
+}
+/*
+fonction qui check le champ email 
+*/
+function checkEmail() {
+  if (emailField.value === "") {
+    document.getElementById("error-email").innerHTML =
+      "Ce champ doit être rempli";
+  } else if (!regexEmail.test(emailField.value.trim())) {
+    document.getElementById("error-email").innerHTML =
+      "Votre adresse mail n'est pas valide";
+  } else {
+    document.getElementById("error-email").innerHTML = "";
+    return true;
+  }
+}
