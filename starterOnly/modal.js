@@ -33,8 +33,24 @@ function main() {
   // au click sur valider le formulaire appel de fonction verifyForm et submitForm
   buttonSendForm.addEventListener("click", (event) => {
     event.preventDefault();
-    verifyForm();
+    // verifyForm();
     submitForm();
+
+    prenom = firstnameField.value;
+    nom = lastnameField.value;
+    quantité = numberTournamentField.value;
+    date = birthdateField.value;
+    mail = emailField.value;
+
+    const contact = {
+      firstName: prenom,
+      lastName: nom,
+      Date: date,
+      email: mail,
+      nombreDeTournois: quantité,
+    };
+    console.log(contact);
+    localStorage.setItem("contact", JSON.stringify(contact));
   });
 }
 
@@ -59,3 +75,221 @@ function closeModal() {
   modalbg.style.display = "none";
   window.location.reload();
 }
+/*
+fonction qui verifie tous les champs => si tous les champs sont ok, envoi le formulaire et fait afficher message confirmation (+ gestion fermeture de la confirmation au click sur bouton)
+*/
+function submitForm() {
+  //Si tous les champs sont ok
+  if (
+    checkFirstname() &&
+    checkLastname() &&
+    checkEmail() &&
+    checkBirthdate() &&
+    checkDate() &&
+    checkNumberTournament() &&
+    checkCheckBox() &&
+    checkCity()
+  ) {
+    //on remplace le contenu de la div .modal par le texte
+    document.querySelector(".modal").innerHTML =
+      "Merci, votre réservation a bien été reçue!";
+
+    // on remplace la valeur du bouton "c'est parti" par "Fermer"
+    buttonSendForm.value = "Fermer";
+
+    //au click sur le bouton on appelle la fonction pour fermer la modale
+    buttonSendForm.addEventListener("click", closeModal);
+  }
+}
+/*
+fonction qui check le champ firstname 
+*/
+function checkFirstname() {
+  if (firstnameField.value === "") {
+    document.getElementById("error-firstname").innerHTML =
+      "Ce champ doit être rempli";
+  } else if (!regexName.test(firstnameField.value.trim())) {
+    document.getElementById("error-firstname").innerHTML =
+      "Format incorrect, vous devez renseigner au moins 2 caractères";
+  } else {
+    document.getElementById("error-firstname").innerHTML = "";
+    console.log(firstnameField.value);
+    return true;
+  }
+}
+/*
+fonction qui check le champ lastname 
+*/
+function checkLastname() {
+  if (lastnameField.value === "") {
+    document.getElementById("error-lastname").innerHTML =
+      "Ce champ doit être rempli";
+  } else if (!regexName.test(lastnameField.value.trim())) {
+    document.getElementById("error-lastname").innerHTML =
+      "Format incorrect, vous devez renseigner au moins 2 caractères";
+  } else {
+    document.getElementById("error-lastname").innerHTML = "";
+    console.log(lastnameField.value);
+    return true;
+  }
+}
+
+/*
+fonction qui check le champ email 
+*/
+function checkEmail() {
+  if (emailField.value === "") {
+    document.getElementById("error-email").innerHTML =
+      "Ce champ doit être rempli";
+  } else if (!regexEmail.test(emailField.value.trim())) {
+    document.getElementById("error-email").innerHTML =
+      "Votre adresse mail n'est pas valide";
+  } else {
+    document.getElementById("error-email").innerHTML = "";
+    console.log(emailField.value);
+    return true;
+  }
+}
+/*
+fonction qui check si le champ birthdate est vide 
+*/
+function checkBirthdate() {
+  if (birthdateField.value === "") {
+    document.getElementById("error-birthdate").innerHTML =
+      "Vous devez renseigner votre date de naissance";
+  } else {
+    document.getElementById("error-birthdate").innerHTML = "";
+    console.log(birthdateField.value);
+    return true;
+  }
+}
+/*
+fonction qui check si un bouton radio est coché 
+*/
+function checkCity() {
+  for (button of buttonsRadio) {
+    if (button.checked) {
+      document.getElementById("error-location").innerHTML = "";
+
+      return true;
+    } else {
+      document.getElementById("error-location").innerHTML =
+        "Vous devez choisir une ville";
+    }
+  }
+}
+
+/*
+fonction qui check si le checkbox est coché 
+*/
+function checkCheckBox() {
+  if (checkBox.checked === false) {
+    // retourne true si coché / false si décoché
+    document.getElementById("error-checkbox").innerHTML =
+      "Vous devez cocher cette case";
+  } else {
+    document.getElementById("error-checkbox").innerHTML = "";
+    return true;
+  }
+}
+
+/*
+fonction qui check la cohérence du champ birthdate
+*/
+function checkDate() {
+  const date = birthdateField.value.split("-"); //split autour des - et retourne un tableau avec chaque élémént
+  const year = parseInt(date[0]); // l'année
+  const month = parseInt(date[1]); // le mois
+  const day = parseInt(date[2]); // le jour
+
+  // Récupère l'année, le mois et le jour en cours
+  const dateCurrent = new Date();
+  const yearCurrent = dateCurrent.getFullYear();
+  const monthNow = dateCurrent.getMonth(); //+1 à rajouter car démarre à 0
+  const monthCurrent = monthNow + 1;
+  const dayCurrent = dateCurrent.getDate();
+
+  // calcul de l'age
+  const age = yearCurrent - year;
+
+  // si année de naissance postérieure à année en cours = impossible
+  if (year > yearCurrent) {
+    document.getElementById("error-birthdate").innerHTML =
+      "Il y a une erreur, cette date n'existe pas encore";
+
+    // si année de naissance inférieure à année en cours
+  } else if (year < yearCurrent) {
+    // si moins de 12 ans = impossible
+    if (age < 12) {
+      document.getElementById("error-birthdate").innerHTML =
+        "Vous devez avoir au moins 12 ans pour vous inscrire";
+      // si plus de 99 ans = impossible
+    } else if (age > 99) {
+      document.getElementById("error-birthdate").innerHTML =
+        "Vous devez avoir entre 12 et 99 ans pour vous inscrire";
+      // si + de 12 ans et - de 99 = ok
+    } else {
+      document.getElementById("error-birthdate").innerHTML = "";
+      return true;
+
+      console.log(birthdateField.value);
+    }
+    // si année de naissance égale à l'année en cours = impossible car - de 12 ans mais gestion des messages d'erreur
+  } else if (year === yearCurrent) {
+    // si mois de naissance inférieur à mois courant = il faut avoir 12 ans
+    if (month < monthCurrent) {
+      document.getElementById("error-birthdate").innerHTML =
+        "Vous devez avoir au moins 12 ans pour vous inscrire";
+      // si mois de naissance supérieur à mois courant = impossible
+    } else if (month > monthCurrent) {
+      document.getElementById("error-birthdate").innerHTML =
+        "Il y a une erreur, cette date n'existe pas encore";
+      // si mois égal
+    } else if (month === monthCurrent) {
+      // si jour de naissance supérieur au jour actuel = erreur
+      if (day >= dayCurrent) {
+        document.getElementById("error-birthdate").innerHTML =
+          "Il y a une erreur, cette date n'existe pas encore";
+        // si jour de naissance inférieur au jour actuel = il faut avoir 12 ans
+      } else {
+        document.getElementById("error-birthdate").innerHTML =
+          "Vous devez avoir au moins 12 ans pour vous inscrire";
+      }
+    }
+  }
+}
+/*
+fonction qui check le champ nombre de tournoi 
+*/
+function checkNumberTournament() {
+  if (numberTournamentField.value === "") {
+    document.getElementById("error-quantity").innerHTML =
+      "Ce champ doit être rempli";
+  } else if (!regexNumber.test(numberTournamentField.value)) {
+    document.getElementById("error-quantity").innerHTML =
+      "Seuls les chiffres sont acceptés";
+  } else {
+    document.getElementById("error-quantity").innerHTML = "";
+    console.log(numberTournamentField.value);
+    return true;
+  }
+}
+/*
+
+function verifyForm() {
+  const arrayButtonsRadio = Array.from(buttonsRadio); // transforme objet en array
+  arrayButtonsRadio.some(checkCity); // Vérifie dans l'array des boutons radio si un élément retourne true
+  checkFirstname();
+  checkLastname();
+  checkEmail();
+  checkBirthdate();
+  checkDate();
+  checkNumberTournament();
+  checkCity();
+  checkCheckBox();
+  console.log(arrayButtonsRadio);
+}
+*/
+/*
+fonction qui appelle toutes les fonctions pour tester les champs et afficher les messages d'erreur
+*/

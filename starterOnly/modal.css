@@ -10,6 +10,16 @@
 }
 /* Landing Page */
 
+#error-location,
+#error-firstname,
+#error-lastname,
+#error-email,
+#error-quantity,
+#error-birthdate,
+#error-checkbox {
+  color: red;
+  font-size: 13px;
+}
 body {
   margin: 0;
   display: flex;
@@ -30,6 +40,12 @@ img {
   padding-right: 1rem;
 }
 
+.modal {
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 .topnav {
   overflow: hidden;
   margin: 3.5%;
@@ -37,6 +53,10 @@ img {
 .header-logo {
   float: left;
 }
+/* .header-logo img{
+  width: auto;
+  height: auto;
+} */
 .main-navbar {
   float: right;
 }
@@ -76,6 +96,9 @@ img {
     float: right;
     display: block;
   }
+  .modal {
+    min-height: 300px;
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -95,13 +118,32 @@ img {
 }
 
 @media screen and (max-width: 540px) {
+  .modal {
+    min-height: 150px;
+  }
   .topnav a {
     display: none;
   }
+  .topnav.responsive .icon {
+    top: 5px;
+    padding-right: 5%;
+  }
+
   .topnav a.icon {
     float: right;
     display: block;
-    margin-top: -15px;
+    margin-top: 0px;
+  }
+  #myTopnav {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  img {
+    width: 90%;
+  }
+  .main-navbar a {
+    font-size: 15px;
   }
 }
 
@@ -172,7 +214,7 @@ main {
 }
 
 .content {
-  margin: 5% auto;
+  margin: 2% auto;
   width: 100%;
   max-width: 500px;
   animation-name: modalopen;
@@ -271,10 +313,11 @@ input[data-error]::after {
   transition: 0.3s;
   opacity: 0;
 }
-.checkbox-input {
+.checkbox-input,
+.checkbox-location {
   display: none;
 }
-.checkbox-input:checked + .checkbox-label .checkbox-icon::after,
+.checkbox-location:checked + .checkbox-label .checkbox-icon::after,
 .checkbox-input:checked + .checkbox2-label .checkbox-icon::after {
   opacity: 1;
 }
@@ -464,6 +507,7 @@ input[data-error]::after {
   height: 100%;
   display: block;
   padding: 0;
+  object-fit: cover;
 }
 .copyrights {
   color: #fe142f;
@@ -480,15 +524,26 @@ footer {
   padding-right: 2vw;
   margin: 0 20px;
 }
+
+/* jusqu'à 800px */
 @media screen and (max-width: 800px) {
+  .hero-headline {
+    font-size: 30px;
+    white-space: normal;
+  }
   .hero-section {
     display: block;
     box-shadow: unset;
   }
+
   .hero-content {
     background: #fff;
     color: #000;
-    padding: 20px;
+    padding: 0;
+    grid-column: auto;
+    min-width: auto;
+    /* text-align: center; */
+    white-space: normal;
   }
   .hero-content::after {
     content: unset;
@@ -496,10 +551,7 @@ footer {
   .hero-content .btn-signup {
     display: none;
   }
-  .hero-headline {
-    font-size: 4.5rem;
-    white-space: normal;
-  }
+
   .hero-text {
     width: unset;
     font-size: 1.5rem;
@@ -516,6 +568,15 @@ footer {
   .copyrights {
     margin-top: 50px;
     text-align: center;
+  }
+}
+
+@media screen and (min-width: 801px) and (max-width: 1024px) {
+  .hero-headline {
+    font-size: 4rem;
+  }
+  .hero-content {
+    min-width: 350px;
   }
 }
 
