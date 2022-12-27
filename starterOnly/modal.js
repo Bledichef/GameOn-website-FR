@@ -35,6 +35,22 @@ function main() {
     event.preventDefault();
     // verifyForm();
     submitForm();
+
+    prenom = firstnameField.value;
+    nom = lastnameField.value;
+    quantité = numberTournamentField.value;
+    date = birthdateField.value;
+    mail = emailField.value;
+
+    const contact = {
+      firstName: prenom,
+      lastName: nom,
+      Date: date,
+      email: mail,
+      nombreDeTournois: quantité,
+    };
+    console.log(contact);
+    localStorage.setItem("contact", JSON.stringify(contact));
   });
 }
 
