@@ -33,7 +33,7 @@ function main() {
   // au click sur valider le formulaire appel de fonction verifyForm et submitForm
   buttonSendForm.addEventListener("click", (event) => {
     event.preventDefault();
-    verifyForm();
+    // verifyForm();
     submitForm();
   });
 }
@@ -215,6 +215,7 @@ function checkDate() {
     } else {
       document.getElementById("error-birthdate").innerHTML = "";
       return true;
+
       console.log(birthdateField.value);
     }
     // si année de naissance égale à l'année en cours = impossible car - de 12 ans mais gestion des messages d'erreur
@@ -253,14 +254,12 @@ function checkNumberTournament() {
       "Seuls les chiffres sont acceptés";
   } else {
     document.getElementById("error-quantity").innerHTML = "";
-    return true;
     console.log(numberTournamentField.value);
+    return true;
   }
 }
-
 /*
-fonction qui appelle toutes les fonctions pour tester les champs et afficher les messages d'erreur
-*/
+
 function verifyForm() {
   const arrayButtonsRadio = Array.from(buttonsRadio); // transforme objet en array
   arrayButtonsRadio.some(checkCity); // Vérifie dans l'array des boutons radio si un élément retourne true
@@ -274,3 +273,7 @@ function verifyForm() {
   checkCheckBox();
   console.log(arrayButtonsRadio);
 }
+*/
+/*
+fonction qui appelle toutes les fonctions pour tester les champs et afficher les messages d'erreur
+*/
