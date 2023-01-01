@@ -526,6 +526,7 @@ footer {
 }
 
 /* jusqu'à 800px */
+
 @media screen and (max-width: 800px) {
   .hero-headline {
     font-size: 30px;
@@ -542,7 +543,7 @@ footer {
     padding: 0;
     grid-column: auto;
     min-width: auto;
-    /* text-align: center; */
+
     white-space: normal;
   }
   .hero-content::after {

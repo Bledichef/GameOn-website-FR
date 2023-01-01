@@ -30,7 +30,7 @@ function main() {
   // au click sur la croix appel de la fonction closeModal
   closeButton.addEventListener("click", closeModal);
 
-  // au click sur valider le formulaire appel de fonction verifyForm et submitForm
+  // au click sur valider le formulaire appel de fonction  submitForm
   buttonSendForm.addEventListener("click", (event) => {
     event.preventDefault();
     // verifyForm();
